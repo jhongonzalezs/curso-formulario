@@ -1,0 +1,92 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+.listar-cursos {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 80%;
+}
+
+.header {
+  background-color: #4caf50;
+  color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.tabla-cursos {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px auto;
+}
+
+.tabla-cursos th, .tabla-cursos td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.tabla-cursos th {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn {
+  padding: 8px 15px;
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.btn.actualizar {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn.eliminar {
+  background-color: #dc3545;
+  color: white;
+}
+
+.modal-editar {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  width: 50%;
+}
+
+.modal-editar h2 {
+  margin-bottom: 20px;
+}
+
+.modal-editar form label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+.modal-editar form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
