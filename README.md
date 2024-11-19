@@ -18,10 +18,20 @@ Implementada con React Router DOM, incluye un menú de navegación para cambiar 
 # Instalación forma local
 
 1. Clona el repositorio:
-code git clone https://github.com/jhongonzalezs/curso-formulario.git
 
 ```
-function test() {
-  console.log("notice the blank line before this function?");
-}
+git clone https://github.com/jhongonzalezs/curso-formulario.git
+cd curso-formulario
+```
+
+2. Instala las dependencias:
+
+```
+npm install
+```
+
+3. Ejecuta la aplicación:
+
+```
+npm run dev
 ```
