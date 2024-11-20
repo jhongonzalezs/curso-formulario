@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "../assets/css/FormularioCurso.css"; // Importamos el archivo de estilos
+import { useState } from "react";
+import "../css/FormularioCurso.css"; // Importamos el archivo de estilos
 import { db } from "../firebase"; // Importamos Firebase
 import { collection, addDoc } from "firebase/firestore";
 

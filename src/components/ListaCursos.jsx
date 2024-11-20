@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
-import "../assets/css/ListarCursos.css"; // Archivo CSS actualizado
+import "../css/ListarCursos.css"; // Archivo CSS actualizado
 
 const ListaCursos = () => {
   const [cursos, setCursos] = useState([]);
