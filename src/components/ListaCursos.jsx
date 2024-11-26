@@ -1,14 +1,16 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
-import "../css/ListarCursos.css"; // Archivo CSS actualizado
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import "../css/ListarCursos.css";
 
 const ListaCursos = () => {
   const [cursos, setCursos] = useState([]);
+  const [unidades, setUnidades] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [cursoEditable, setCursoEditable] = useState(null);
 
-  // Función para obtener los cursos desde Firebase
   const fetchCursos = async () => {
     const cursosCollection = collection(db, "cursos");
     const cursosSnapshot = await getDocs(cursosCollection);
@@ -19,7 +21,16 @@ const ListaCursos = () => {
     setCursos(cursosList);
   };
 
-  // Función para eliminar un curso
+  const fetchUnidades = async () => {
+    const unidadesCollection = collection(db, "unidades");
+    const unidadesSnapshot = await getDocs(unidadesCollection);
+    const unidadesList = unidadesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setUnidades(unidadesList);
+  };
+
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("¿Estás seguro de eliminar este curso?");
     if (confirmDelete) {
@@ -29,19 +40,16 @@ const ListaCursos = () => {
     }
   };
 
-  // Función para abrir el formulario de edición
   const handleEdit = (curso) => {
     setCursoEditable(curso);
     setIsEditing(true);
   };
 
-  // Función para manejar cambios en el formulario de edición
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCursoEditable({ ...cursoEditable, [name]: value });
   };
 
-  // Función para guardar los cambios en Firebase
   const handleSave = async () => {
     const cursoDoc = doc(db, "cursos", cursoEditable.id);
     await updateDoc(cursoDoc, { ...cursoEditable });
@@ -50,8 +58,59 @@ const ListaCursos = () => {
     fetchCursos();
   };
 
+  const handleExportExcel = (curso) => {
+    const unidadesCurso = unidades
+      .filter((unidad) => unidad.cursoId === curso.id)
+      .sort((a, b) => a.numeroUnidad - b.numeroUnidad);
+
+    const data = [
+      ["Plan de Curso", curso.nombre],
+      ["Categoría", curso.categoria, "", "Duración", curso.duracion],
+      ["Autor", curso.autor, "", "Fecha de Creación", curso.fechaCreacion],
+      ["Programas", curso.programas],
+      ["Presentación Larga del curso", curso.presentacionLarga],
+      ["Presentación Corta del curso", curso.presentacionCorta],
+      ["Resultados de aprendizaje"],
+      ...(curso.resultados || []).map((resultado) => ["", resultado]),
+      ["Storytelling - Problema General", curso.storytelling?.problema || ""],
+      ["Storytelling - Solución General", curso.storytelling?.solucion || ""],
+      ["Storytelling - Final Feliz", curso.storytelling?.finalFeliz || ""],
+      ["Palabras Clave", curso.palabrasClave || ""],
+      ["Público Objetivo", curso.publicoObjetivo || ""],
+      ["Unidades"],
+      ...unidadesCurso.map((unidad) => [
+        `Unidad ${unidad.numeroUnidad}`,
+        `Nombre: ${unidad.nombreLeccion}`,
+        `Duración: ${unidad.duracion}`,
+        `Semana Sugerida: ${unidad.semanaSugerida}`,
+        `Temáticas: ${unidad.tematicas}`,
+        `Propósito: ${unidad.propositoStorytelling}`,
+        `Resultados de Aprendizaje: ${unidad.resultadosAprendizaje}`,
+        `Tipo: ${unidad.tipoLeccion}`,
+      ]),
+    ];
+
+    const worksheet = XLSX.utils.aoa_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, curso.nombre);
+
+    worksheet["!cols"] = [
+      { wch: 30 },
+      { wch: 50 },
+      { wch: 20 },
+      { wch: 30 },
+      { wch: 20 },
+    ];
+
+    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const dataBlob = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(dataBlob, `${curso.nombre}.xlsx`);
+    alert(`Archivo Excel de ${curso.nombre} generado exitosamente.`);
+  };
+
   useEffect(() => {
     fetchCursos();
+    fetchUnidades();
   }, []);
 
   return (
@@ -92,6 +151,9 @@ const ListaCursos = () => {
                     <button className="btn eliminar" onClick={() => handleDelete(curso.id)}>
                       Eliminar
                     </button>
+                    <button className="btn excel" onClick={() => handleExportExcel(curso)}>
+                      Exportar Excel
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -111,7 +173,6 @@ const ListaCursos = () => {
               value={cursoEditable.nombre}
               onChange={handleInputChange}
             />
-
             <label>Categoría:</label>
             <input
               type="text"
@@ -119,7 +180,6 @@ const ListaCursos = () => {
               value={cursoEditable.categoria}
               onChange={handleInputChange}
             />
-
             <label>Duración:</label>
             <input
               type="text"
@@ -127,7 +187,6 @@ const ListaCursos = () => {
               value={cursoEditable.duracion}
               onChange={handleInputChange}
             />
-
             <label>Autor:</label>
             <input
               type="text"
@@ -135,7 +194,6 @@ const ListaCursos = () => {
               value={cursoEditable.autor}
               onChange={handleInputChange}
             />
-
             <label>Fecha de Creación:</label>
             <input
               type="date"
@@ -143,7 +201,6 @@ const ListaCursos = () => {
               value={cursoEditable.fechaCreacion}
               onChange={handleInputChange}
             />
-
             <label>Programas:</label>
             <input
               type="text"
@@ -151,7 +208,6 @@ const ListaCursos = () => {
               value={cursoEditable.programas}
               onChange={handleInputChange}
             />
-
             <div className="modal-actions">
               <button type="button" className="btn guardar" onClick={handleSave}>
                 Guardar

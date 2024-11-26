@@ -21,8 +21,6 @@ const FormularioCurso = () => {
     },
   });
 
-  const [unidades, setUnidades] = useState([]);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCurso({ ...curso, [name]: value });
@@ -36,34 +34,11 @@ const FormularioCurso = () => {
     });
   };
 
-  const addUnidad = () => {
-    setUnidades([
-      ...unidades,
-      {
-        nombre: "",
-        tematicas: "",
-        resultados: "",
-      },
-    ]);
-  };
-
-  const handleUnidadChange = (index, e) => {
-    const { name, value } = e.target;
-    const nuevasUnidades = [...unidades];
-    nuevasUnidades[index][name] = value;
-    setUnidades(nuevasUnidades);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // Guardar datos del curso
-      const cursoRef = await addDoc(collection(db, "cursos"), curso);
-
-      // Guardar unidades asociadas al curso
-      for (const unidad of unidades) {
-        await addDoc(collection(db, `cursos/${cursoRef.id}/unidades`), unidad);
-      }
+      await addDoc(collection(db, "cursos"), curso);
 
       alert("Datos guardados correctamente en Firebase");
       // Reiniciar formulario
@@ -83,7 +58,6 @@ const FormularioCurso = () => {
           finalFeliz: "",
         },
       });
-      setUnidades([]);
     } catch (error) {
       console.error("Error al guardar los datos:", error);
       alert("Error al conectar con el servidor");
@@ -198,40 +172,6 @@ const FormularioCurso = () => {
           value={curso.storytelling.finalFeliz}
           onChange={handleStorytellingChange}
         />
-      </section>
-
-      <section className="seccion">
-        <h2>Estructura del Curso</h2>
-        <button type="button" onClick={addUnidad} className="btn">
-          Añadir Unidad
-        </button>
-
-        {unidades.map((unidad, index) => (
-          <div className="unidad" key={index}>
-            <h3>Unidad {index + 1}</h3>
-            <label>Nombre:</label>
-            <input
-              type="text"
-              name="nombre"
-              value={unidad.nombre}
-              onChange={(e) => handleUnidadChange(index, e)}
-            />
-
-            <label>Temáticas:</label>
-            <textarea
-              name="tematicas"
-              value={unidad.tematicas}
-              onChange={(e) => handleUnidadChange(index, e)}
-            />
-
-            <label>Resultados:</label>
-            <textarea
-              name="resultados"
-              value={unidad.resultados}
-              onChange={(e) => handleUnidadChange(index, e)}
-            />
-          </div>
-        ))}
       </section>
 
       <button type="submit" className="btn enviar">

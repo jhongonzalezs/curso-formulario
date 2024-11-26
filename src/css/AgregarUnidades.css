@@ -1,0 +1,98 @@
+/* Contenedor principal del formulario */
+form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 80%;  /* 80% del ancho de la pantalla */
+  max-width: 800px; /* Máximo de 800px de ancho */
+  margin: 0 auto;  /* Centramos el formulario */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;  /* Espaciado entre los campos */
+}
+
+/* Estilos para los encabezados */
+h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Contenedor para los campos que van uno al lado del otro */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;  /* Espaciado entre los campos */
+  flex-wrap: wrap; /* Permite que los campos se ajusten si no caben en una línea */
+}
+
+/* Estilos para los campos de formulario */
+label {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+input,
+select,
+textarea {
+  width: 100%;  /* Campos ocupan todo el ancho disponible */
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+/* Ajuste para los campos de la fila */
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 32%;  /* Ajustamos el tamaño para que quepan tres campos por fila */
+}
+
+/* Estilo especial para el campo textarea */
+textarea {
+  min-height: 100px;  /* Altura mínima de los textarea */
+  resize: vertical;   /* Permite que el textarea se pueda redimensionar verticalmente */
+}
+
+/* Botón de envío */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: center;  /* Centra el botón */
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Estilo para las alertas */
+.alert {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}

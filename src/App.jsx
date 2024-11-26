@@ -1,24 +1,19 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FormularioCurso from "./components/FormularioCurso";
 import ListarCursos from "./components/ListaCursos";
+import AgregarUnidades from "./components/AgregarUnidades";
+import Header from "./components/Header";
 
 const App = () => {
   return (
     <Router>
-      <div>
-        <nav className="navbar">
-          <ul>
-            <li>
-              <Link to="/">Formulario de Curso</Link>
-            </li>
-            <li>
-              <Link to="/listar">Listar Cursos</Link>
-            </li>
-          </ul>
-        </nav>
+      <Header />
+      <div style={{ paddingTop: "100px" }}>
+        {/* Asegúrate de que el contenido no quede oculto detrás del Header */}
         <Routes>
           <Route path="/" element={<FormularioCurso />} />
+          <Route path="/unidades" element={<AgregarUnidades />} />
           <Route path="/listar" element={<ListarCursos />} />
         </Routes>
       </div>

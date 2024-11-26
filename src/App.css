@@ -1,42 +1,76 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+/* App.css */
+
+/* Estilo general del body */
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #f4f4f9;
+}
+
+/* Header de la página */
+.navbar {
+  width: 100% !important;
+  height: 80px !important;
+  background: linear-gradient(90deg, #4a90e2, #50e3c2) !important;
+  color: white !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 0 40px !important;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1) !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 1000 !important;
+}
+
+
+/* Logo */
+.navbar .logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Estilo de la navegación */
+.navbar nav ul {
+  list-style-type: none;
+  display: flex;
+  gap: 30px; /* Espaciado entre los enlaces */
+  margin: 0;
+}
+
+.navbar nav li {
+  display: inline-block;
+}
+
+/* Enlaces dentro del navbar */
+.navbar nav a {
+  color: white;
+  text-decoration: none; /* Sin subrayado */
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s ease, transform 0.3s ease; /* Transición suave */
+}
+
+.navbar nav a:hover {
+  color: #f0f0f0;
+  transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+}
+
+/* Asegurarse de que el contenido no quede debajo del navbar */
+main {
+  margin-top: 80px; /* Espacio para que el contenido no quede bajo el navbar */
   padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+/* Agregar un efecto de hover para el logo */
+.navbar .logo:hover {
+  color: #f0f0f0;
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }
